@@ -2,7 +2,7 @@
 Polynomial Calculator build with Java
 Data Structures Course
 
-## Description:##
+## Description:
 This project aims to demonstrate proficiency in data structures problem-solving by
 creating a practical tool for manipulating polynomials, The project involves creating a Polynomial
 Calculator based on the LinkedList data structure.
