@@ -18,6 +18,9 @@ public class Main {
         char choice, option = 'n';
         String poly1, poly2;
         SingleLinkedList result = null;
+        SingleLinkedList polyList1 = new SingleLinkedList();
+        SingleLinkedList polyList2 = new SingleLinkedList();
+
 
         System.out.println("Polynomial Calculator\n");
         do {
@@ -41,15 +44,27 @@ public class Main {
 
             switch (choice) {
                 case '1':
-                    result = add(newPolynomial(poly1), newPolynomial(poly2));
+                    polyList1 = newPolynomial(poly1);
+                    polyList2 = newPolynomial(poly2);
+                    if (polyList1 == null || polyList2 == null)
+                        break;
+                    result = add(polyList1, polyList2);
                     System.out.println("Result: " + result.toString());
                     break;
                 case '2':
-                    result = sub(newPolynomial(poly1), newPolynomial(poly2));
+                    polyList1 = newPolynomial(poly1);
+                    polyList2 = newPolynomial(poly2);
+                    if (polyList1 == null || polyList2 == null)
+                        break;
+                    result = sub(polyList1, polyList2);
                     System.out.println("Result: " + result.toString());
                     break;
                 case '3':
-                    result = multiply(newPolynomial(poly1), newPolynomial(poly2));
+                    polyList1 = newPolynomial(poly1);
+                    polyList2 = newPolynomial(poly2);
+                    if (polyList1 == null || polyList2 == null)
+                        break;
+                    result = multiply(polyList1, polyList2);
                     System.out.println("Result: " + result.toString());
                     break;
                 case '4':
@@ -63,11 +78,19 @@ public class Main {
                     System.out.println("Enter the value of x: ");
                     double x = Double.parseDouble(reader.readLine());
 
-                    if (choice == '1')
-                        System.out.println("Result: " + evaluate(x, newPolynomial(poly1)));
-                    else
-                        System.out.println("Result: " + evaluate(x, newPolynomial(poly2)));
-
+                    if (choice == '1') {
+                        polyList1 = newPolynomial(poly1);
+                        if (polyList1 == null)
+                            break;
+                        else
+                            System.out.println("Result: " + evaluate(x, polyList1));
+                    } else {
+                        polyList2 = newPolynomial(poly2);
+                        if (polyList2 == null)
+                            break;
+                        else
+                            System.out.println("Result: " + evaluate(x, polyList2));
+                    }
                     break;
                 case '5':
                     System.out.println("Thank you for using the Polynomial Calculator.");
@@ -75,13 +98,15 @@ public class Main {
                     break;
             }
 
-            do {
-                System.out.println("Enter your choice: \n" +
-                        "\t y. Continue with the same polynomials\n" +
-                        "\t n. Continue with a new polynomial\n" +
-                        "\t q. Exit");
-                option = reader.readLine().charAt(0);
-            } while (option != 'y' && option != 'Y' && option != 'n' && option != 'N' && option != 'q' && option != 'Q');
+            if (polyList1 != null && polyList2 != null) {
+                do {
+                    System.out.println("Enter your choice: \n" +
+                            "\t y. Continue with the result polynomial\n" +
+                            "\t n. Continue with a new polynomial\n" +
+                            "\t q. Exit");
+                    option = reader.readLine().charAt(0);
+                } while (option != 'y' && option != 'Y' && option != 'n' && option != 'N' && option != 'q' && option != 'Q');
+            }
 
         } while (choice != '5' && option != 'q' && option != 'Q');
     }
@@ -182,8 +207,9 @@ public class Main {
 
     public static SingleLinkedList newPolynomial(String poly) {
         poly = poly.replaceAll("\\s+", "");
+        poly = poly.replaceAll("X", "x");
         poly = poly.replaceAll("x\\^", "&") + "#"; // # is used as a terminator for the end of the string
-        System.out.println(poly);
+        System.out.println("Checking for errors in the polynomial...");
 
         SingleLinkedList result = new SingleLinkedList();
         Node variableNode = new Node();
@@ -223,15 +249,16 @@ public class Main {
                     var = "";
                     mode = 2;
                 } else {
-                    System.out.println("ERROR: Invalid input character '" + ch + "' is at position " + i + " in the string.");
+                    System.out.println("ERROR: Invalid input character '" + ch + "' at position " + (i + 1) + " in the string.\n");
                     return null;
                 }
             }
         } catch (Exception e) {
-            System.out.println("ERROR: Invalid Input");
+            System.out.println("ERROR: Invalid Input\n");
             e.printStackTrace();
             return null;
         }
+        System.out.println("Polynomial is valid.\n");
         return result;
     }
 
