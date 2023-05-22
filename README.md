@@ -1,6 +1,5 @@
 # Polynomial-Calculator
 Polynomial Calculator build with Java
-Data Structures Course
 
 ## Description:
 This project aims to demonstrate proficiency in data structures problem-solving by
