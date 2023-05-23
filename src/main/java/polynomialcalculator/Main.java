@@ -2,16 +2,41 @@ package polynomialcalculator;
 
 import LinkedList.Node;
 import LinkedList.SingleLinkedList;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class Main {
+import static javafx.application.Application.launch;
 
-    public static void main(String args[]) throws IOException {
-        window();
+public class Main extends Application {
+
+    public void start(Stage stage) throws IOException {
+        CalculatorScene calculatorScene = new CalculatorScene();
+        Scene scene = calculatorScene.getScene();
+        scene.getStylesheets().add("styles.css");
+
+        Image img = new Image("https://cdn2.iconfinder.com/data/icons/ios7-inspired-mac-icon-set/512/Calculator_512.png");
+
+        stage.setResizable(false);
+        stage.getIcons().add(img);
+        stage.setTitle("Expression Evaluator and Converter");
+        stage.setScene(scene);
+        stage.show();
     }
+
+    public static void main(String[] args) {
+        launch();
+    }
+
+
+//    public static void main(String args[]) throws IOException {
+//        window();
+//    }
 
     public static void window() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
